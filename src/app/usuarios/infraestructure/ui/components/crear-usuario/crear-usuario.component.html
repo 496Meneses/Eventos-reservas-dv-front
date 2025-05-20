@@ -1,0 +1,20 @@
+<div [formGroup] = "this.formulario">
+    <div class = "p-fluid field">
+        <label for="correo" class="form-label label-required">Correo</label>
+        <input pInputText formControlName = "correo" type="text" [ngClass]="{'ng-dirty ng-invalid': this.correo.invalid && this.correo.touched}" (blur) = "validarCorreo()">
+    </div>
+    <div class = "p-fluid field">
+        <label for="password" class="form-label label-required">Password</label>
+        <input pInputText formControlName = "password" type="password" [ngClass]="{'ng-dirty ng-invalid': this.password.invalid && this.password.touched}">
+    </div>
+    <div class = "p-fluid field">
+        <label for="factor" class="form-label label-required">Rol</label>
+        <p-dropdown [options]="catRoles" formControlName="rol" optionValue = "id" placeholder="Seleccione" 
+        optionLabel="nombre" [showClear]="false" appendTo = "body"
+        [ngClass]="{'ng-dirty ng-invalid': this.rol.invalid && this.rol.touched}"
+        ></p-dropdown>
+    </div>
+    <div class="flex mt-3 justify-content-end">
+        <button pButton label="Guardar" (click)="this.guardar()" class = "p-button"  [disabled] = "this.modoLectura"></button>
+    </div>
+</div>

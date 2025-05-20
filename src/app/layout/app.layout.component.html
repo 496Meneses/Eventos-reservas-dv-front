@@ -1,0 +1,36 @@
+<div class="layout-wrapper " [ngClass]="containerClass" >
+    <div class = "overlay" *ngIf="this.cargando | async">
+        <p-progressSpinner strokeWidth="9" fill="var(--surface-ground)" animationDuration=".5s" ></p-progressSpinner>
+    </div>
+    <div class="layout-sidebar">
+        <div class="flex flex-row justify-content-center" style="margin-top: 30px;">
+            <img class="bandera" src="../../assets/layout/images/logo-davivienda.png" alt="Eventos Reservas Davivienda">
+        </div>
+        <hr> 
+        <div style="margin-top: 50px;">
+            <div class="flex flex-column" style=" text-align: center; word-break: break-all;">
+                <span style="color: white; font-size: 10px; text-align: center;">Usuario: {{this.loginService.getCorreo() | uppercase}}</span>
+                <span style="color: white; font-size: 10px; text-align: center;" *ngIf="this.loginService.getEsAdministrador()">ADMINISTRADOR</span>
+                <p style="color: white; font-size: 12px; text-align: center;" *ngIf="!this.loginService.getEsAdministrador()">COORDINADOR</p>
+            </div>
+        </div>
+        <app-sidebar></app-sidebar>
+        <button class="p-button" icon="pi pi-user" style="width: 100%;" (click) = "this.loginService.cerrarSesion()">
+            Cerrar Sesión
+        </button>
+        <div class="flex flex-column justify-content-end" style="height: 450px">
+            <div class="contenedor-bandera">
+                <img class="bandera" >
+            </div>
+        </div>
+    </div>
+    <div class="layout-main-container">
+        <div class="layout-main">
+            <router-outlet></router-outlet>
+        </div>
+    </div>    
+    <div class="layout-mask">
+    </div>
+</div>
+
+

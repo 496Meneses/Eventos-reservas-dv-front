@@ -1,0 +1,63 @@
+<p-toast></p-toast>
+<p-card>
+
+    <h5><b>Usuarios</b></h5>
+    <p-table [value] = 'this.usuarios' 
+    styleClass="p-datatable-sm p-datatable-gridlines"
+    dataKey="id"
+    [paginator]="true" [rows]="10" [loading]="cargando"
+    >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>
+                    Correo
+                </th>
+                <th>
+                    Rol
+                </th>
+                <th style="width: 10%;">
+                    Acciones
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario >
+            <tr>
+                <td style="width: 20%;">
+                    {{usuario.correo}}
+                </td>
+                <td style="width: 20%;">
+                    {{usuario.desRol}}
+                </td>
+                <td style="width: 10%;">
+                        <button pButton pRipple icon="pi pi-search" class="p-button-sm p-button-rounded p-button-text p-button-info mr-2" (click)="verUsuario(usuario)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-sm p-button-rounded p-button-text p-button-warning mr-2" (click)="editarUsuario(usuario)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-sm p-button-rounded p-button-text p-button-danger" (click)="eliminarUsuario(usuario.id)"></button>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">
+                    Aun no existen usuarios
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div class="flex flex-row justify-content-center mt-2">
+        <button pButton type="button" label="Crear" icon="pi pi-plus" class="p-button-sm" (click) = "this.crearUsuario()"></button>
+    </div>
+</p-card>
+<p-confirmDialog
+    header="Confirmación"
+    [closable]="false"
+    key="confirmarEliminar"
+    icon="pi pi-exclamation-circle"
+    message="¿Esta seguro que desea eliminar el usuario?"
+    [style]="{ width: '425px' }"
+    acceptButtonStyleClass="p-button"
+    rejectButtonStyleClass="p-button-outlined"
+    acceptLabel="Si"
+    rejectLabel="No"
+></p-confirmDialog>
