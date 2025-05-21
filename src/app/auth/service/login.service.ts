@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, map } from 'rxjs';
@@ -15,25 +15,25 @@ export class LoginService {
   constructor(private http: HttpClient, private router: Router, private detalleUsuarioUseCase: DetalleUsuarioUseCase) { }
 
   getLogin(correo: string, password: string) {
-    let credenciales = {
-      correo: correo,
-      password: password
-    }
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<HttpResponse<any>>(environment.url.concat("login"), credenciales, {
+        const params = new HttpParams()
+          .set('correo', correo)
+          .set('password', password);
+    return this.http.post<HttpResponse<any>>(environment.url.concat("auth/login"), null, {
       observe: 'response',
-      headers: headers
+      headers: headers,
+      params: params
     }).pipe(
-      map( (response : HttpResponse<any>) => {
+      map( (response : any) => {
         const body = response.body
         const headers = response.headers;
         const bearerToken = headers.get('Authorization')
-        const token = bearerToken?.replace("Bearer ", '');
-        localStorage.setItem("correo", credenciales.correo)
-        localStorage.setItem("token", token!);
-        this.detalleUsuarioUseCase.execute(credenciales.correo).subscribe(r => {
+        localStorage.setItem("correo", correo)
+        localStorage.setItem("token", response.token);
+        this.detalleUsuarioUseCase.execute(correo).subscribe(r => {
           localStorage.setItem("rol", r.idRol.toString());
           this.usuarioLogueado$.next(r);
         })

@@ -21,6 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   declarations: [],
   imports: [
@@ -45,7 +46,8 @@ import { ToastModule } from 'primeng/toast';
     DividerModule,
     SkeletonModule,
     StepsModule,
-    InputNumberModule
+    InputNumberModule,
+    FullCalendarModule
   ],
   exports: [
     ProgressSpinnerModule,

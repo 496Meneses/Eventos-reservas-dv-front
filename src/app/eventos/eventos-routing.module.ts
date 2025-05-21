@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuardGuard } from '../shared/auth-guard.guard';
-import { BandejaUsuariosComponent } from './infraestructure/ui/components/bandeja-usuarios/bandeja-usuarios.component';
+import { PrincipalEventosComponent } from './infraestructure/ui/components/principal-eventos/principal-eventos.component';
+
 //, canActivate: [AuthGuardGuard]
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: BandejaUsuariosComponent }
+        { path: '', component: PrincipalEventosComponent }
     ])],
     exports: [RouterModule]
 })
-export class UsuariosRoutingModule { }
+export class EventosRoutingModule { }

@@ -1,0 +1,30 @@
+<div [formGroup]="formulario">
+  <div class="p-fluid field">
+    <label for="titulo" class="form-label label-required">Título</label>
+    <input pInputText id="titulo" formControlName="titulo" type="text"
+           [ngClass]="{'ng-dirty ng-invalid': titulo.invalid && titulo.touched}">
+  </div>
+
+  <div class="p-fluid field">
+    <label for="fecha" class="form-label label-required">Fecha</label>
+    <input pInputText id="fecha" formControlName="fecha" type="date"
+           [ngClass]="{'ng-dirty ng-invalid': fecha.invalid && fecha.touched}">
+  </div>
+
+  <div class="p-fluid field">
+    <label for="descripcion" class="form-label label-required">Descripción</label>
+    <textarea pInputTextarea id="descripcion" formControlName="descripcion" rows="3"
+              [ngClass]="{'ng-dirty ng-invalid': descripcion.invalid && descripcion.touched}"></textarea>
+  </div>
+
+  <div class="p-fluid field">
+    <label for="limite" class="form-label label-required">Límite asistencia</label>
+    <input pInputText id="limite" formControlName="limite" type="number" min="1"
+           [ngClass]="{'ng-dirty ng-invalid': limite.invalid && limite.touched}">
+  </div>
+  
+  <div class="flex mt-3 justify-content-end">
+    <button pButton label="Eliminar" (click)="eliminar()" class="p-button" style="margin-right: 10px;"></button>
+    <button pButton label="Guardar" (click)="guardar()" class="p-button"></button>
+  </div>
+</div>

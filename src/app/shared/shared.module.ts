@@ -12,7 +12,6 @@ import { UsuarioRepository } from '../usuarios/domain/repositories/usuarioReposi
 import { UsuarioWebRepository } from '../usuarios/domain/repositories/usuarioWebRepository';
 
 
-
 @NgModule({
   declarations: [
     BreadCrumbComponent

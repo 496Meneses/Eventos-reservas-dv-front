@@ -4,15 +4,18 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 import { PrincipalComponent } from './home/principal/principal.component';
 import { AuthGuardGuard } from './shared/auth-guard.guard';
 import { RolesGuard } from './shared/roles.guard';
-
+//, canActivate: [AuthGuardGuard]
+//, canActivate: [RolesGuard]
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
-                path: '', component: AppLayoutComponent, canActivate: [AuthGuardGuard],
+                path: '', component: AppLayoutComponent,
                 children: [
                     { path: '', component: PrincipalComponent },
-                    { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule), canActivate: [RolesGuard] },
+                    { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
+                    { path: 'eventos', loadChildren: () => import('./eventos/eventos.module').then(m => m.EventosModule) },
+                    { path: 'reservas', loadChildren: () => import('./reservas/reservas.module').then(m => m.ReservasModule) },
                 ]
             },
             { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },

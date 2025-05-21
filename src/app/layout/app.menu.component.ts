@@ -14,12 +14,13 @@ export class AppMenuComponent implements OnInit {
     constructor(public layoutService: LayoutService, private loginService: LoginService) { }
 
     ngOnInit() {
-        this.loginService.getDetalleUsuarioLogueadoAsObserver().subscribe(usuario => {
-            this.definirMenu(usuario.idRol!.toString());
-        })
-        if (this.loginService.getRol()) {
-            this.definirMenu(this.loginService.getRol()!)
-        }
+        this.definirMenu("1")
+        // this.loginService.getDetalleUsuarioLogueadoAsObserver().subscribe(usuario => {
+        //     this.definirMenu(usuario.idRol!.toString());
+        // })
+        // if (this.loginService.getRol()) {
+        //     this.definirMenu(this.loginService.getRol()!)
+        // }
     }
     definirMenu(rol: string) {
         if (rol === this.ADMINISTRADOR.toString()) {

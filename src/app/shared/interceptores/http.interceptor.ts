@@ -16,19 +16,19 @@ export class HttpInterceptores implements HttpInterceptor {
     private loginService: LoginService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // //this.spinnerInterceptorService.mostrar();
-    // if (this.loginService.getToken()) {
-    //   const authReq = request.clone({
-    //     setHeaders: {
-    //       Authorization: `Bearer ${this.loginService.getToken()}`
-    //     }
-    //   });
-    //   return next.handle(authReq).pipe(
-    //     finalize( () => {
-    //       //this.spinnerInterceptorService.noMostrar();
-    //     })
-    //   );
-    // }
+    //this.spinnerInterceptorService.mostrar();
+    if (this.loginService.getToken()) {
+      const authReq = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.loginService.getToken()}`
+        }
+      });
+      return next.handle(authReq).pipe(
+        finalize( () => {
+          //this.spinnerInterceptorService.noMostrar();
+        })
+      );
+    }
     return next.handle(request).pipe(
       finalize( () => {
         //this.spinnerInterceptorService.noMostrar();

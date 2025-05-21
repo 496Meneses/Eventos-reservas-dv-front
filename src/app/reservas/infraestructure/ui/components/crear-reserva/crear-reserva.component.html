@@ -1,0 +1,19 @@
+<div class="flex mt-4 justify-content-end gap-2">
+  <!-- Botón cancelar reserva -->
+  <button pButton 
+          icon="pi pi-trash" 
+          label="Cancelar reserva" 
+          class="p-button-danger" 
+          (click)="eliminar()" 
+          *ngIf="idReserva">
+  </button>
+
+  <!-- Botón reservar evento -->
+  <button pButton 
+          icon="pi pi-check" 
+          label="Reservar evento" 
+          class="p-button-success" 
+          (click)="guardar()" 
+          *ngIf="!idReserva">
+  </button>
+</div>
