@@ -4,7 +4,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 
-import { EventoDTO } from 'src/app/eventos/domain/EventoDTO';
+
 import { EventoService } from 'src/app/eventos/infraestructure/ui/service/evento.service';
 import { CrearReservaComponent } from '../crear-reserva/crear-reserva.component';
 import { ReservaService } from '../../service/reserva.service';
@@ -43,21 +43,32 @@ export class PrincipalReservaComponent {
     private loginService: LoginService
   ) {
   }
+esFechaFutura(fechaISO: string): boolean {
+  const fechaEvento = new Date(fechaISO);
+  const fechaActual = new Date();
+  fechaEvento.setHours(0, 0, 0, 0);
+  fechaActual.setHours(0, 0, 0, 0);
+
+  return fechaEvento >= fechaActual;
+}
 
   cargar() {
-    console.log(this.idPersona)
+
     this.reservaService.obtenerPorPersona(this.idPersona).subscribe(reservas => {
+          console.log(reservas)
       const eventosReservados = reservas.map(reserva => ({
         id: reserva.evento.id,
-        title: '(Reservado) ' + reserva.evento.title ,
+        title: this.esFechaFutura(reserva.evento.date) ? '(Reservado) ' + reserva.evento.title :  '(Finalizado) ' + reserva.evento.title,
         date: reserva.evento.date,
         extendedProps: {
           descripcion: reserva.evento.extendedProps.descripcion,
           idReserva: reserva.idReserva,
+          modoLectura:  this.esFechaFutura(reserva.evento.date) ? false: true,
         },
-        color: '#28a745' // verde o el color que prefieras
+
+        color:  this.esFechaFutura(reserva.evento.date) ? '#28a745': '#ffffd', 
       }));
-      // Si también tienes eventos normales:
+
       this.eventoService.listarDisponibles(this.idPersona).subscribe(eventos => {
         const eventosNormales = eventos.map(e => ({
           id: e.id,
@@ -66,7 +77,7 @@ export class PrincipalReservaComponent {
           extendedProps: {
             descripcion: e.extendedProps.descripcion
           },
-          color: '#007bff' // azul o tu color base
+          color: '#007bff'
         }));
 
         this.calendarOptions.events = [...eventosNormales, ...eventosReservados];
@@ -82,7 +93,7 @@ export class PrincipalReservaComponent {
       data: {
         evento: evento,
         idPersona: this.idPersona,
-        modoLectura: false,
+        modoLectura: evento.modoLectura,
         idReserva: evento.idReserva
       },
     },
@@ -105,9 +116,12 @@ export class PrincipalReservaComponent {
         descripcion: event.extendedProps['descripcion']
       },
       limite: eventoEncontrado.limite,
-      idReserva: event.extendedProps['idReserva']
+      idReserva: event.extendedProps['idReserva'],
+      modoLectura: event.extendedProps['modoLectura']
     };
+    if (!evento.modoLectura) {
+      this.crearReserva(evento);
+    }
 
-    this.crearReserva(evento);
   }
 }

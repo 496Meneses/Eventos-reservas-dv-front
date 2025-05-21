@@ -59,7 +59,7 @@ export class PrincipalEventosComponent implements OnInit {
       header: 'Editar Evento',
       data: {
         evento: evento,
-        modoLectura: false
+        modoLectura: !this.esFechaFutura(evento.date)
       }
     },
     )
@@ -67,6 +67,15 @@ export class PrincipalEventosComponent implements OnInit {
       this.cargar()
     })
   }
+
+esFechaFutura(fechaISO: string): boolean {
+  const fechaEvento = new Date(fechaISO);
+  const fechaActual = new Date();
+  fechaEvento.setHours(0, 0, 0, 0);
+  fechaActual.setHours(0, 0, 0, 0);
+
+  return fechaEvento >= fechaActual;
+}
 
 
   onEventClick(info: any) {

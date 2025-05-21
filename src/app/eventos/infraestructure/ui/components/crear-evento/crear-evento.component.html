@@ -24,7 +24,7 @@
   </div>
   
   <div class="flex mt-3 justify-content-end">
-    <button pButton label="Eliminar" (click)="eliminar()" class="p-button" style="margin-right: 10px;" *ngIf="this.evento"></button>
-    <button pButton label="Guardar" (click)="guardar()" class="p-button"></button>
+    <button pButton label="Eliminar" (click)="eliminar()" class="p-button" style="margin-right: 10px;" *ngIf="this.evento && !modoLectura"></button>
+    <button pButton label="Guardar" (click)="guardar()" class="p-button" *ngIf="!modoLectura"></button>
   </div>
 </div>

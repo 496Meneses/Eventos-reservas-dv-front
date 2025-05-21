@@ -24,14 +24,14 @@ export class CrearEventoComponent implements OnInit {
   minFecha: string;
   modoLectura: boolean = false
 
-  constructor(private fb : FormBuilder,
+  constructor(private fb: FormBuilder,
     private obtenerDetalleUsuario: DetalleUsuarioUseCase,
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private messageService: MessageService,
     private loginService: LoginService,
     private eventoService: EventoService
-    ) {}
+  ) { }
 
   ngOnInit(): void {
     this.crearFormulario()
@@ -46,40 +46,48 @@ export class CrearEventoComponent implements OnInit {
     }
     if (this.config.data?.modoLectura) {
       this.formulario.disable()
+      this.modoLectura = this.config.data?.modoLectura
     }
   }
 
   crearFormulario() {
     this.formulario = this.fb.group({
-      titulo: ["",Validators.required],
-      fecha: ["",Validators.required],
-      descripcion: ["",Validators.required],
-      limite: ["",Validators.required]
+      titulo: ["", Validators.required],
+      fecha: ["", Validators.required],
+      descripcion: ["", Validators.required],
+      limite: ["", Validators.required]
     })
   }
 
 
-eliminar() {
-  this.eventoService.eliminar(this.evento.id).subscribe({
-    next: (r) => {
-            this.ref.close()
-            if (r.error) {
+  eliminar() {
+    this.eventoService.eliminar(this.evento.id).subscribe({
+      next: (r) => {
+        this.ref.close()
+        if (r.error) {
 
-            this.messageService.add({
-                severity: "error",
-                detail: r.respuesta
-            })
-            } else {
-                this.messageService.add({
-                severity: "success",
-                detail: r.respuesta
-            })
-            }
+          this.messageService.add({
+            severity: "error",
+            detail: r.respuesta
+          })
+        } else {
+          this.messageService.add({
+            severity: "success",
+            detail: r.respuesta
+          })
+        }
 
+      },
+      error:(r) => {
+      this.messageService.add({
+        severity: "error",
+        detail: "No se puede eliminar el evento, tiene reservas asignadas"
+      })
+      this.ref.close()
     }
   })
 }
-guardar() { 
+guardar() {
   if (this.formulario.valid) {
     const fechaFormateada = this.formatearFecha(this.fecha.value);
 
@@ -94,18 +102,18 @@ guardar() {
     };
     this.eventoService.crear(crear).subscribe({
       next: (r) => {
-                    this.ref.close()
+        this.ref.close()
         if (r.error) {
-            this.ref.close()
-            this.messageService.add({
-                severity: "error",
-                detail: r.respuesta
-            })
+          this.ref.close()
+          this.messageService.add({
+            severity: "error",
+            detail: r.respuesta
+          })
         } else {
-            this.messageService.add({
-                severity: "success",
-                detail: r.respuesta
-            })
+          this.messageService.add({
+            severity: "success",
+            detail: r.respuesta
+          })
         }
       }
     })
@@ -119,29 +127,29 @@ formatearFecha(fechaStr: string): string {
   return `${day}/${month}/${year}`;
 }
 
-  
-  setDatosFormulario() {
-    this.titulo.setValue(this.evento.title)
-      const fechaFormateada = this.evento.date instanceof Date
+
+setDatosFormulario() {
+  this.titulo.setValue(this.evento.title)
+  const fechaFormateada = this.evento.date instanceof Date
     ? this.evento.date.toISOString().split('T')[0]
     : this.evento.date;
-    this.limite.setValue(this.evento.limite)
-   this.fecha.setValue(fechaFormateada);
-    this.descripcion.setValue(this.evento.extendedProps.descripcion)
-  }
+  this.limite.setValue(this.evento.limite)
+  this.fecha.setValue(fechaFormateada);
+  this.descripcion.setValue(this.evento.extendedProps.descripcion)
+}
 
   get titulo() : FormControl {
-    return this.formulario.get("titulo") as FormControl
-  }
+  return this.formulario.get("titulo") as FormControl
+}
   get fecha() : FormControl {
-    return this.formulario.get("fecha") as FormControl
-  }
+  return this.formulario.get("fecha") as FormControl
+}
 
   get descripcion() : FormControl {
-    return this.formulario.get("descripcion") as FormControl
-  }
+  return this.formulario.get("descripcion") as FormControl
+}
 
   get limite() : FormControl {
-    return this.formulario.get("limite") as FormControl
-  }
+  return this.formulario.get("limite") as FormControl
+}
 }

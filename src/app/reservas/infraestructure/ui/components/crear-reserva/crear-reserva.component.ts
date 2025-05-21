@@ -18,6 +18,7 @@ export class CrearReservaComponent implements OnInit {
   idPersona: number
   hacerReserva: boolean
   idReserva: number
+  modoLectura: boolean
   constructor(
     private ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -37,6 +38,7 @@ export class CrearReservaComponent implements OnInit {
       }
       this.idPersona = this.config.data?.idPersona
       this.idReserva = this.config.data?.idReserva
+      this.modoLectura = this.config.data?.modoLectura
     }
 
   
