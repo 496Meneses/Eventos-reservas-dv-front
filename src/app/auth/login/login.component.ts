@@ -51,8 +51,8 @@ export class LoginComponent {
             })
             } else {
                             this.messageService.add({
-                severity: "success",
-                detail: "Error al registrar usuario"
+                severity: "error",
+                detail: "Usuario no registrado"
             })
             }
 
