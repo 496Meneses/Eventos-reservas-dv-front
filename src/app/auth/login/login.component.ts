@@ -3,6 +3,8 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LoginService } from '../service/login.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CrearUsuarioComponent } from 'src/app/usuarios/infraestructure/ui/components/crear-usuario/crear-usuario.component';
 
 @Component({
     selector: 'app-login',
@@ -25,7 +27,37 @@ export class LoginComponent {
     correo: string;
     constructor(public loginService: LoginService, 
         private router: Router,
-        private messageService: MessageService) { }
+        private messageService: MessageService,
+        public dialogService: DialogService,
+    ) { }
+
+      crearUsuario() {
+        const ref = this.dialogService.open(CrearUsuarioComponent, {
+          height: 'auto',
+          width: '60vw',
+          header: 'Registrarse',
+          data: {
+            modoLectura: false,
+            idRol: 2
+          }
+        },
+        )
+        ref.onClose.subscribe(r => {
+
+            if (r) {
+            this.messageService.add({
+                severity: "success",
+                detail: "Usuario registrado correctamente"
+            })
+            } else {
+                            this.messageService.add({
+                severity: "success",
+                detail: "Error al registrar usuario"
+            })
+            }
+
+        })
+      }
 
     async iniciarSesion() {
         this.loginService.getLogin(this.correo, this.password).toPromise().then((response) => {
@@ -36,5 +68,9 @@ export class LoginComponent {
                 detail: "Credenciales incorrectas"
             })
          })
+    }
+    registrarse() {
+
+        this.crearUsuario()
     }
 }

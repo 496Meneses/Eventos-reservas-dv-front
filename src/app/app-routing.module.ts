@@ -4,7 +4,8 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
 import { PrincipalComponent } from './home/principal/principal.component';
 import { AuthGuardGuard } from './shared/auth-guard.guard';
 import { RolesGuard } from './shared/roles.guard';
-//, canActivate: [AuthGuardGuard]
+import { RolAdminGuard } from './shared/rolAdmin.guard';
+//
 //, canActivate: [RolesGuard]
 @NgModule({
     imports: [
@@ -12,11 +13,11 @@ import { RolesGuard } from './shared/roles.guard';
             {
                 path: '', component: AppLayoutComponent,
                 children: [
-                    { path: '', component: PrincipalComponent },
-                    { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
-                    { path: 'eventos', loadChildren: () => import('./eventos/eventos.module').then(m => m.EventosModule) },
-                    { path: 'reservas', loadChildren: () => import('./reservas/reservas.module').then(m => m.ReservasModule) },
-                ]
+                    { path: '', component: PrincipalComponent,  },
+                    { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule),canActivate: [RolAdminGuard] },
+                    { path: 'eventos', loadChildren: () => import('./eventos/eventos.module').then(m => m.EventosModule), canActivate: [RolAdminGuard] },
+                    { path: 'reservas', loadChildren: () => import('./reservas/reservas.module').then(m => m.ReservasModule), canActivate: [RolesGuard] },
+                ], canActivate: [AuthGuardGuard]
             },
             { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
             { path: '**', redirectTo: '/notfound' },

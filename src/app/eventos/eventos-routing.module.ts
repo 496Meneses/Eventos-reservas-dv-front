@@ -4,10 +4,10 @@ import { RouterModule } from '@angular/router';
 import { AuthGuardGuard } from '../shared/auth-guard.guard';
 import { PrincipalEventosComponent } from './infraestructure/ui/components/principal-eventos/principal-eventos.component';
 
-//, canActivate: [AuthGuardGuard]
+//, 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: '', component: PrincipalEventosComponent }
+        { path: '', component: PrincipalEventosComponent, canActivate: [AuthGuardGuard] }
     ])],
     exports: [RouterModule]
 })

@@ -9,6 +9,8 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DialogService } from 'primeng/dynamicdialog';
+import { CrearUsuarioUseCase } from 'src/app/usuarios/applications/crear-usuario/crear-usuario-use-case';
 @NgModule({
     imports: [
         CommonModule,
@@ -22,7 +24,10 @@ import { ToastModule } from 'primeng/toast';
     ],
     declarations: [LoginComponent],
     providers: [
-        MessageService
+        MessageService,
+        DialogService,
+        CrearUsuarioUseCase,
+        
     ]
 })
 export class LoginModule { }

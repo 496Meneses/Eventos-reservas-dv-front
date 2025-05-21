@@ -8,7 +8,7 @@ import { DetalleUsuarioUseCase } from '../usuarios/applications/detalle-usuario/
 @Injectable({
   providedIn: 'root'
 })
-export class RolesGuard implements CanActivate {
+export class RolAdminGuard implements CanActivate {
 
   constructor(private loginService: LoginService,
     private detalleUsuarioUseCase:DetalleUsuarioUseCase) {
@@ -18,7 +18,7 @@ export class RolesGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.loginService.getRol() == "2") { //ADMINISTRADOR
+      if (this.loginService.getRol() == "1") { //ADMINISTRADOR
         return true;
       }
       return false;

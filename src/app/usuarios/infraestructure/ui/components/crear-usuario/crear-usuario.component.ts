@@ -21,6 +21,7 @@ export class CrearUsuarioComponent {
   catRoles: Catalogo[]
   catCaracteristicas: Catalogo[]
   usuario: Usuario
+  idRol: number
   
   modoLectura: boolean = false
 
@@ -60,6 +61,10 @@ export class CrearUsuarioComponent {
     if (this.config.data?.modoLectura) {
       this.formulario.disable()
     }
+    if (this.config.data?.idRol) {
+     this.rol.setValue(this.config.data?.idRol)
+     this.rol.disable()
+    }
   }
   cargarCatalogos() {
     this.obtenerRolesUseCase.execute().subscribe((r) => {
@@ -94,6 +99,10 @@ export class CrearUsuarioComponent {
   setDatosFormulario() {
     this.correo.setValue(this.usuario.correo)
     this.rol.setValue(this.usuario.idRol)
+    if (this.config.data?.idRol) {
+     this.rol.setValue(this.config.data?.idRol)
+     this.rol.disable()
+    }
   }
 
   get correo() : FormControl {
