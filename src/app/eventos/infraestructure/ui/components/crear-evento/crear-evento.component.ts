@@ -21,7 +21,7 @@ export class CrearEventoComponent implements OnInit {
   catRoles: Catalogo[]
   catCaracteristicas: Catalogo[]
   evento: EventoDTO
-  
+  minFecha: string;
   modoLectura: boolean = false
 
   constructor(private fb : FormBuilder,
@@ -36,6 +36,8 @@ export class CrearEventoComponent implements OnInit {
   ngOnInit(): void {
     this.crearFormulario()
     this.cargarConfigDialog()
+    const hoy = new Date();
+    this.minFecha = hoy.toISOString().split('T')[0]; // Formato YYYY-MM-DD
   }
   cargarConfigDialog() {
     if (this.config.data?.evento) {

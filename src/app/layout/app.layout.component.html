@@ -10,8 +10,8 @@
         <div style="margin-top: 50px;">
             <div class="flex flex-column" style=" text-align: center; word-break: break-all;">
                 <span style="color: white; font-size: 10px; text-align: center;">Usuario: {{this.loginService.getCorreo() | uppercase}}</span>
-                <span style="color: white; font-size: 10px; text-align: center;" *ngIf="this.loginService.getEsAdministrador()">ADMINISTRADOR</span>
-                <p style="color: white; font-size: 12px; text-align: center;" *ngIf="!this.loginService.getEsAdministrador()">COORDINADOR</p>
+                <span style="color: white; font-size: 10px; text-align: center;" *ngIf="this.loginService.getEsAdministrador()">ADMINISTRADOR SALON EVENTOS</span>
+                <p style="color: white; font-size: 12px; text-align: center;" *ngIf="!this.loginService.getEsAdministrador()">INVITADO</p>
             </div>
         </div>
         <app-sidebar></app-sidebar>

@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class LoginService {
   ADMINISTRADOR: number = 1
   usuarioLogueado$ = new Subject<Usuario>();
+  usuarioLogueado : Usuario 
   constructor(private http: HttpClient, private router: Router, private detalleUsuarioUseCase: DetalleUsuarioUseCase) { }
 
   getLogin(correo: string, password: string) {
@@ -32,10 +33,12 @@ export class LoginService {
         const headers = response.headers;
         const bearerToken = headers.get('Authorization')
         localStorage.setItem("correo", correo)
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", body.token);
         this.detalleUsuarioUseCase.execute(correo).subscribe(r => {
           localStorage.setItem("rol", r.idRol.toString());
+                    localStorage.setItem("id", r.id.toString());
           this.usuarioLogueado$.next(r);
+          this.usuarioLogueado = r
         })
         return body;
       })
@@ -48,9 +51,13 @@ export class LoginService {
   getCorreo() {
     return localStorage.getItem("correo");
   }
+    getId() {
+    return localStorage.getItem("id");
+  }
   getRol() {
     return localStorage.getItem("rol");
   }
+
   cerrarSesion() {
     localStorage.clear();
     this.router.navigate(['/auth'])
@@ -64,4 +71,5 @@ export class LoginService {
     }
     return true
   }
+
 }

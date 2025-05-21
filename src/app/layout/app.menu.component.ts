@@ -14,13 +14,12 @@ export class AppMenuComponent implements OnInit {
     constructor(public layoutService: LayoutService, private loginService: LoginService) { }
 
     ngOnInit() {
-        this.definirMenu("1")
-        // this.loginService.getDetalleUsuarioLogueadoAsObserver().subscribe(usuario => {
-        //     this.definirMenu(usuario.idRol!.toString());
-        // })
-        // if (this.loginService.getRol()) {
-        //     this.definirMenu(this.loginService.getRol()!)
-        // }
+        this.loginService.getDetalleUsuarioLogueadoAsObserver().subscribe(usuario => {
+            this.definirMenu(usuario.idRol!.toString());
+        })
+        if (this.loginService.getRol()) {
+            this.definirMenu(this.loginService.getRol()!)
+        }
     }
     definirMenu(rol: string) {
         if (rol === this.ADMINISTRADOR.toString()) {
@@ -43,11 +42,6 @@ export class AppMenuComponent implements OnInit {
                             label: 'Eventos',
                             icon: 'pi pi-fw pi-forward',
                             routerLink: ['/eventos']
-                        },
-                        {
-                            label: 'Reservas',
-                            icon: 'pi pi-fw pi-file-o',
-                            routerLink: ['/reservas']
                         },
                         {
                             label: 'Usuarios',
@@ -75,14 +69,9 @@ export class AppMenuComponent implements OnInit {
                     items: [
                         {
                             label: 'Reservas',
-                            icon: 'pi pi-fw pi-forward',
-                            routerLink: ['/reservas']
-                        },
-                        {
-                            label: 'Eventos',
                             icon: 'pi pi-fw pi-file-o',
-                            routerLink: ['/eventos']
-                        },
+                            routerLink: ['/reservas']
+                        }
                     ]
                 },
             ];

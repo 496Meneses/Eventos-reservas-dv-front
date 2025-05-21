@@ -8,6 +8,7 @@ import { EventoDTO } from 'src/app/eventos/domain/EventoDTO';
 import { EventoService } from 'src/app/eventos/infraestructure/ui/service/evento.service';
 import { CrearReservaComponent } from '../crear-reserva/crear-reserva.component';
 import { ReservaService } from '../../service/reserva.service';
+import { LoginService } from 'src/app/auth/service/login.service';
 
 @Component({
   selector: 'app-principal-reserva',
@@ -24,16 +25,27 @@ export class PrincipalReservaComponent {
 
   idPersona: number = 1
   ngOnInit(): void {
-    this.cargar()
+    console.log(this.loginService.getId())
+            this.idPersona = Number(this.loginService.getId())
+            this.loginService.getDetalleUsuarioLogueadoAsObserver().subscribe(usuario => {
+            if (usuario) {
+              this.idPersona = usuario.id
+                  
+            }
+        })
+        this.cargar()
+
   }
 
   constructor(public mensajeService: MessageService, public dialogService: DialogService,
     public eventoService: EventoService,
-    public reservaService: ReservaService
+    public reservaService: ReservaService,
+    private loginService: LoginService
   ) {
   }
 
   cargar() {
+    console.log(this.idPersona)
     this.reservaService.obtenerPorPersona(this.idPersona).subscribe(reservas => {
       const eventosReservados = reservas.map(reserva => ({
         id: reserva.evento.id,
@@ -69,7 +81,7 @@ export class PrincipalReservaComponent {
       header: 'Reserva',
       data: {
         evento: evento,
-        idPersona: 1,
+        idPersona: this.idPersona,
         modoLectura: false,
         idReserva: evento.idReserva
       },

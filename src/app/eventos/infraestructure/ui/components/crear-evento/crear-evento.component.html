@@ -7,7 +7,7 @@
 
   <div class="p-fluid field">
     <label for="fecha" class="form-label label-required">Fecha</label>
-    <input pInputText id="fecha" formControlName="fecha" type="date"
+    <input pInputText id="fecha" formControlName="fecha" type="date" [min]="minFecha"
            [ngClass]="{'ng-dirty ng-invalid': fecha.invalid && fecha.touched}">
   </div>
 
@@ -24,7 +24,7 @@
   </div>
   
   <div class="flex mt-3 justify-content-end">
-    <button pButton label="Eliminar" (click)="eliminar()" class="p-button" style="margin-right: 10px;"></button>
+    <button pButton label="Eliminar" (click)="eliminar()" class="p-button" style="margin-right: 10px;" *ngIf="this.evento"></button>
     <button pButton label="Guardar" (click)="guardar()" class="p-button"></button>
   </div>
 </div>
